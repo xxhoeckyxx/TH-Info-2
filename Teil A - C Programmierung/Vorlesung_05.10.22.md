@@ -3,7 +3,7 @@
 `printf()` ist ein Ellipsen-Prototyp:
 ```C
 #include <stdio.h>
-#include <stdarg.h>
+#include <stdarg.h> // Wichtig für Ellipsen-Prototypen
 
 int printf(const char *format, ...)
 ```
@@ -30,4 +30,4 @@ float viel_add1(int n, ...){
 
 ## Rekursive Funktionen
 
-rekursive (sich selbstaufrufende) Funktionen sind langsamer als itterative (Schleifen) Funktionen aber auch kürzer zu schreiben. 
+rekursive _(sich selbstaufrufende)_ Funktionen sind langsamer als itterative _(Schleifen)_ Funktionen aber auch kürzer zu schreiben. Jedoch sollte auf Grund von Speicherbedarf und Speicherbelegung auf die itterative Methode zurückgegriffen werden _(braucht weniger Arbeitsspeicher => schneller Ausführbar)_. 
