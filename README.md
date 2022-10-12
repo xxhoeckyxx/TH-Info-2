@@ -11,3 +11,4 @@
 ## Vorlesung am 12.10.2022
 - Rekursive Funktionen
 - Zeiger auf Funktionen
+- String- & `char`- Funktionen
