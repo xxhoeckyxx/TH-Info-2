@@ -12,3 +12,6 @@
 - Rekursive Funktionen
 - Zeiger auf Funktionen
 - String- & `char`- Funktionen
+
+## Übungen am 21.10.2022
+- An den Dozenten Hritam Dutta ein Mail zum nachträglichen Einschreiben geschickt
