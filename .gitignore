@@ -47,7 +47,9 @@
 *.cmd
 .DS_Store
 .tmp_versions/
+.vscode/
 .dist/
+Teil A - C Programmierung/Praktikum/build
 modules.order
 Module.symvers
 Mkfile.old

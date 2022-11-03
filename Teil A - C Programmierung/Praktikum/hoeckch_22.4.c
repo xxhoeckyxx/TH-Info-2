@@ -2,35 +2,37 @@
  Description: Aufgabe 22.4 - Ellipsen-Prototypen
      Project: Praktikum Informatik 2
       Author: hoeckch80619@th-nuernberg.de
-        Date: 21-Oktober-2022
+        Date: 28-Oktober-2022
 -------------------------------------------------------------------------*/
 #include <stdio.h>
 #include <stdarg.h>
 
-float vielmax(int n, ...)
+int vielmax(int n, ...)
 {
-    va_list arg_zeiger_1, arg_zeiger_2;
-    float wert_1, wert_2, ergeb = 0;
+    va_list arg_zeiger_1;
+    int wert_1, ergeb = 0;
     int i;
-    va_start(arg_zeiger_1, n);      // Zugriff auf 1.Argument (noch benamt)
-    va_start(arg_zeiger_2, n+1);    // Zugriff auf 2.Argument (unbenamt)
-    for (i = 1; i <= n; i++)        // Lesen der restlichen Argumente (unbenamt)
-    {
-        wert_1 = va_arg(arg_zeiger_1, double);
-        wert_2 = va_arg(arg_zeiger_2, double);
+    va_start(arg_zeiger_1, n);                      // Zugriff auf 1.Argument (noch benamt, Anzahl der Argumente, die Uebergeben werden)
 
-        if(wert_1 > wert_2){
+    for (i = 0; i < n; i++)                         // Lesen der restlichen Argumente (unbenamt) -> Schleife bis alle angegebenen Argumente bearbeitet sind
+    {
+        // printf("Zeahler I: %d\n", i);            /* -> Debug */
+        wert_1 = va_arg(arg_zeiger_1, int);
+        // printf("Wert1: %d\n", wert_1);           /* -> Debug */
+
+        if(wert_1 > ergeb)
+        {
             ergeb = wert_1;
-        } else {
-            ergeb = wert_2;
         }
+        // printf("Ergebnis: %d\n", ergeb);         /* -> Debug */
+        
     }
-    va_end(arg_zeiger_1); // Stack wieder in sauberen Zustand versetzen
-    va_end(arg_zeiger_2); // Stack wieder in sauberen Zustand versetzen
+    va_end(arg_zeiger_1);                           // Stack wieder in sauberen Zustand versetzen
     return (ergeb);
 }
 
-int main(){
+int main()
+{
 
 
     printf("Testprogramm fuer Funktion vielmax()\n");
@@ -38,9 +40,9 @@ int main(){
 
     int ergebnis;
 
-    ergebnis= vielmax(12, 17, 3, 6, 24, 8);
-    printf("Das Maximum der Zahlen 12, 17, 3, 6, 24, 8 ist: %d", ergebnis);
-    ergebnis= vielmax(105, 77, 3, 54);
-    printf("Das Maximum der Zahlen 105, 77, 3, 54 ist: %d", ergebnis);
+    ergebnis = vielmax(6, 12, 17, 3, 6, 24, 8);
+    printf("Das Maximum der Zahlen 12, 17, 3, 6, 24, 8 ist: %d\n", ergebnis);
+    ergebnis = vielmax(4, 105, 77, 3, 54);
+    printf("Das Maximum der Zahlen 105, 77, 3, 54 ist: %d\n", ergebnis);
 
 }   
