@@ -5,7 +5,7 @@
         Date: 2-November-2022
 -------------------------------------------------------------------------*/
 #include <stdio.h>
-#define innvertierung 0xFFFF
+#define INVERTIERUNG 0xFFFF
 
 void DezToBin(int dezimal)
 {
@@ -29,7 +29,7 @@ int main()
     scanf("%d", &input);
     if(input < 0)
     {
-        input = innvertierung + 1 + input;
+        input = INVERTIERUNG + 1 + input;
     }
     DezToBin(input);
 }
