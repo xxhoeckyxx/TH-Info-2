@@ -33,14 +33,26 @@ int input_fkt(int var1)
     return korrektur;
 }
 
-int array_fuellen()
+int array_fuellen(int *array, int groesse, int input)
 {
-
+    for(int i = 0; i <= input; i++)
+    {
+        array[i] = rand() % 2;
+        printf("I = %d; %d\n", i, array[i]);
+    }
 }
 
-int array_vergleichen()
+int array_vergleichen(int *array, int groesse, int input)
 {
-    
+    for(int j = 0, k = 1, l = 0; k <= input; j = j + 2, k = k + 2, l++)
+    {
+        if(array[j] == array[k])
+        {
+            array[j-l] = 0;
+        } else {
+            array[j-l] = 1;
+        }
+    }
 }
 
 int main()
@@ -62,24 +74,7 @@ int main()
     }
 
     printf("Array: ");
-    for(int i = 0; i <= input; i++)
-    {
-        if(test == 0)
-        {
-            array1[i] = rand() % 2;
-        }
-        printf("I = %d; %d\n", i, array1[i]);
-    }
 
-    for(int j = 0, k = 1, l = 0; k <= input; j = j + 2, k = k + 2, l++)
-    {
-        if(array1[j] == array1[k])
-        {
-            array1[j-l] = 0;
-        } else {
-            array1[j-l] = 1;
-        }
-    }
     printf("Array: ");
     for (int i = 0; i <= input/2; i++)
     {
