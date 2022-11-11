@@ -33,16 +33,15 @@ void einlesen_text(FILE *fp, char *strings, int *stellen)
     }
     else
     {
-        // komplette Datei zeichenweise einlesen
-        while((strings[i] = fgetc(fp)) != EOF)
+        while((strings[i] = fgetc(fp)) != EOF)                  /*  komplette Datei zeichenweise einlesen  */
         {
-            //printf("%c ", strings[i]); /* Debug   */
+            //printf("%c ", strings[i]);                        /*  Debug   */
             i++;
             fflush(stdin);
         }
         fclose(fp);
     }
-    *stellen = i;   /*  Debug   */
+    *stellen = i;                                               /*  Debug   */
 }
 
 void wortleange_ermitteln(char *strings, int *leange)
@@ -79,8 +78,8 @@ int main()
     einlesen_text(file, string, &buchstaben);
     string_teilen(string, &komplette_wortanzahl, &leange);
 
-    printf("Zeichen im Text: %d\n", buchstaben); /*  Debug   */
-    printf("%s \n", string);  /*  Debug   */
+    printf("Zeichen im Text: %d\n", buchstaben);                /*  Debug   */
+    printf("%s \n", string);                                    /*  Debug   */
 
     print_table(leange, anzahl);
     return 0;
