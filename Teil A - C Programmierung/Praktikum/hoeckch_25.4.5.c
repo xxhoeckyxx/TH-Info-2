@@ -1,8 +1,8 @@
 /*----- wortlen.c --------------------------------------------------------
- Description: Aufgabe 25.4.5 - Strings und char-Zeiger Teil1
+ Description: Aufgabe 24.4.5 - Strings und char-Zeiger Teil2
      Project: Praktikum Informatik 2
       Author: hoeckch80619@th-nuernberg.de
-        Date: 10-November-2022
+        Date: 11-November-2022
 -------------------------------------------------------------------------*/
 #include <stdio.h>
 #include <stdlib.h>
