@@ -13,14 +13,16 @@ einem Text ausgibt. Wendet man dieses Programm z.B.auf die Programmdatei wortlen
 an: wortlen <wortlen.c
 */
 
-void print_table(int leange, int anzahl)
+void print_table(int *leange, int *anzahl)
 {
+    int i = 0;
     printf("Wortleange\t|\tAnzahl\t|\n");
     printf("----------------+---------------|\n");
     do
     {
-        printf("\t%d\t|\t%d\t|\n", leange, anzahl);
-    } while (anzahl < 0);
+        printf("\t%d\t|\t%d\t|\n", leange[i], anzahl[i]);
+        i++;
+    } while (anzahl[i] > 0);
 }
 
 void einlesen_text(FILE *fp, char *strings, int *stellen)
@@ -33,54 +35,92 @@ void einlesen_text(FILE *fp, char *strings, int *stellen)
     }
     else
     {
-        while((strings[i] = fgetc(fp)) != EOF)                  /*  komplette Datei zeichenweise einlesen  */
+        while((strings[i] = fgetc(fp)) != EOF)                                      /*  komplette Datei zeichenweise einlesen  */
         {
-            //printf("%c ", strings[i]);                        /*  Debug   */
+            //printf("%c ", strings[i]);                                            /*  Debug   */
             i++;
-            fflush(stdin);
+            //fflush(stdin);
         }
         fclose(fp);
     }
-    *stellen = i;                                               /*  Debug   */
+    *stellen = i;                                                                   /*  Debug   */
 }
 
-void wortleange_ermitteln(char *strings, int *leange)
+void wortleange_ermitteln_aus_Eingabe(char *strings, int *leangen_array)
 {
-    *leange = strlen(strings);
-}
+    int array_speicher = 0,
+        leange = 0;
+    char *abschnitt = NULL,
+         *neachsterAbschnitt = NULL;
 
-void string_teilen(char *strings, int *wortanzahl, int *leange)
-{
-    int i = *wortanzahl;
-    char *abschnitt = NULL;
-    char *neachsterAbschnitt = NULL;
+    //printf("Anfang\n");                                                           /*  Debug   */
 
     abschnitt = strtok_r(strings, " ", &neachsterAbschnitt);
+    leange = strlen(abschnitt);
+    //printf("Leange vor while: %d\n", leange);                                     /*  Debug   */
+    leangen_array[array_speicher] = leange;
+    array_speicher++;
+    //printf("%d.Array_Speicherstelle: %s\n", array_speicher, abschnitt);           /*  Debug   */
 
-    while(abschnitt != NULL)
+    while(neachsterAbschnitt != NULL)
     {
         abschnitt = strtok_r(NULL, " ", &neachsterAbschnitt);
-        i++;
-        wortleange_ermitteln(abschnitt, leange);
+        leange = strlen(abschnitt);
+        //printf("Leange in while: %d\n", leange);                                  /*  Debug   */
+        leangen_array[array_speicher] = leange;
+        array_speicher++;
+        //printf("%d.Array_Speicherstelle: %s\n", array_speicher, abschnitt);       /*  Debug   */
     }
-    *wortanzahl = i;
+    //printf("Ende\n");                                                             /*  Debug   */
+}
+
+void hueafigkeit_ermitteln(int *leangen_array, int *counter_array)
+{
+    int wortleange = 1,
+        counter = 0,
+        array_speicher = 0,
+        array_zeahler = 0;
+
+    while(leangen_array[array_speicher] != 0)
+    {
+        printf("%d.Speicherstelle_LeangenArray: %d\n", array_speicher, leangen_array[array_speicher]);
+        if(wortleange == leangen_array[array_speicher])
+        {
+            counter++;
+            printf("Counter: %d\n", counter);
+            array_speicher++;
+            printf("Array_Speicher: %d\n", array_speicher);
+            array_zeahler++;
+            counter_array[array_speicher] = counter;
+            printf("%d.Speicherstelle_CounterArray: %d\n", array_speicher, counter_array[array_speicher]);
+        }
+        else
+        {
+            wortleange++;
+            printf("Wortleange: %d\n", wortleange);
+            array_speicher = 0;
+            counter = 0;
+        }
+    }  
 }
 
 int main()
 {
     FILE *file;
-    char string[10000];
-    int leange = 0, 
-        anzahl = 0,
-        komplette_wortanzahl = 0,
+    char string[10000] = {0};
+    int leangen_array[10000] = {1},
+        counter_array[10000] = {0},
         buchstaben = 0;
 
     einlesen_text(file, string, &buchstaben);
-    string_teilen(string, &komplette_wortanzahl, &leange);
+    //printf("Stelle 290; %c\n", string[290]);                                      /*  Debug      */
+    wortleange_ermitteln_aus_Eingabe(string, leangen_array);
+    hueafigkeit_ermitteln(leangen_array, counter_array);
 
-    printf("Zeichen im Text: %d\n", buchstaben);                /*  Debug   */
-    printf("%s \n", string);                                    /*  Debug   */
+    //printf("Zahlen Array: %d\n", *leangen_array);                                 /*  Debug      */
+    //printf("Zeichen im Text: %d\n", buchstaben);                                  /*  Debug      */
+    //printf("%s \n", string);                                                      /*  Debug      */
 
-    print_table(leange, anzahl);
+    print_table(leangen_array, counter_array);
     return 0;
 }
