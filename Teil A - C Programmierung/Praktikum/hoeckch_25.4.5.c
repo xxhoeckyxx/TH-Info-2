@@ -1,5 +1,5 @@
 /*----- wortlen.c --------------------------------------------------------
- Description: Aufgabe 24.4.5 - Strings und char-Zeiger Teil2
+ Description: Aufgabe 25.4.5 - Strings und char-Zeiger Teil2
      Project: Praktikum Informatik 2
       Author: hoeckch80619@th-nuernberg.de
         Date: 11-November-2022
@@ -13,19 +13,43 @@ einem Text ausgibt. Wendet man dieses Programm z.B.auf die Programmdatei wortlen
 an: wortlen <wortlen.c
 */
 
-void print_table(int *leange, int *anzahl)
+void input_fkt(int *var1)
 {
-    int i = 0;
-    printf("Wortleange\t|\tAnzahl\t|\n");
-    printf("----------------+---------------|\n");
-    do
+    int pruefe, korrektur;
+    do                                                                                  /*  Schleife um die Eingabe zu ueberpruefen                         */
     {
-        printf("\t%d\t|\t%d\t|\n", leange[i], anzahl[i]);
-        i++;
-    } while (anzahl[i] > 0);
+        printf("Wie möchten Sie Einlesen?\n\t1.)\tTabelle\n\t2.)\tText\n");             /*  Text zum einlesen der Zahl                                      */
+        pruefe = scanf("%d", var1);                                                     /*  Einlesen der Zahl                                               */
+        fflush(stdin);
+        if (pruefe != 1 || (*var1) < 1 || *var1 > 2)                                    /*  Wird solange wiederholt bis der Benutzer das richtige eingibt   */
+        {
+            printf("Erneut Versuchen!\n");
+        }
+    } while (pruefe != 1 || (*var1) < 1 || *var1 > 2);                                  /*  Pruefbedingung                                                  */
 }
 
-void einlesen_text(FILE *fp, char *strings, int *stellen)
+void print_table(int *laenge, int array_groeße, int *mode)
+{
+    int anzahl = 0;
+    printf("\n\n\tWortlaenge\t|\tAnzahl\t|\n");
+    printf("------------------------+---------------|\n");
+    do
+    {
+        if(laenge[anzahl] != 0 && anzahl != 0)
+        {
+            if(*mode == 1)
+            {
+                printf("\t\t%d\t|\t%d\t|\n", anzahl, laenge[anzahl]);
+            } else if(*mode == 2)
+            {
+                printf("Zahlenwert %d an der Stelle %d\n", laenge[anzahl], anzahl);
+            }
+        }
+        anzahl++;
+    } while (anzahl <= array_groeße);
+}
+
+void einlesen_text(FILE *fp, char *strings, int *stellen, int *modus)
 {
     int i = *stellen;
     fp = fopen("../hoeckch_25.4.5.c", "r");
@@ -35,92 +59,76 @@ void einlesen_text(FILE *fp, char *strings, int *stellen)
     }
     else
     {
-        while((strings[i] = fgetc(fp)) != EOF)                                      /*  komplette Datei zeichenweise einlesen  */
+        while((strings[i] = fgetc(fp)) != EOF)                                                      /*  komplette Datei zeichenweise einlesen  */
         {
-            //printf("%c ", strings[i]);                                            /*  Debug   */
+            //printf("%c ", strings[i]);                                                              /*  Debug   */
             i++;
-            //fflush(stdin);
         }
         fclose(fp);
     }
-    *stellen = i;                                                                   /*  Debug   */
+
+    input_fkt(modus);
+
+    *stellen = i;                                                                                   /*  Debug   */
 }
 
-void wortleange_ermitteln_aus_Eingabe(char *strings, int *leangen_array)
+void wortlaenge_ermitteln_aus_Eingabe(char *strings, int *laengen_array, int *max_wortlaenge)
 {
-    int array_speicher = 0,
-        leange = 0;
+    int counter = 0,
+        laenge = 0,
+        max_laenge = *max_wortlaenge;
     char *abschnitt = NULL,
-         *neachsterAbschnitt = NULL;
+         *naechsterAbschnitt = NULL;
 
-    //printf("Anfang\n");                                                           /*  Debug   */
+    //printf("Anfang\n");                                                                             /*  Debug   */
 
-    abschnitt = strtok_r(strings, " ", &neachsterAbschnitt);
-    leange = strlen(abschnitt);
-    //printf("Leange vor while: %d\n", leange);                                     /*  Debug   */
-    leangen_array[array_speicher] = leange;
-    array_speicher++;
-    //printf("%d.Array_Speicherstelle: %s\n", array_speicher, abschnitt);           /*  Debug   */
+    abschnitt = strtok_r(strings, " ", &naechsterAbschnitt);
+    laenge = strlen(abschnitt);
+    max_laenge = laenge;
+    counter = laengen_array[laenge];
+    counter++;
+    laengen_array[laenge] = counter;
+    //printf("Stelle: %s\n", abschnitt);                                                              /*  Debug   */
+    //printf("Laenge vor while: %d\tCounter Wert: %d\n", laenge, counter);                            /*  Debug   */
 
-    while(neachsterAbschnitt != NULL)
+    while(naechsterAbschnitt != NULL)
     {
-        abschnitt = strtok_r(NULL, " ", &neachsterAbschnitt);
-        leange = strlen(abschnitt);
-        //printf("Leange in while: %d\n", leange);                                  /*  Debug   */
-        leangen_array[array_speicher] = leange;
-        array_speicher++;
-        //printf("%d.Array_Speicherstelle: %s\n", array_speicher, abschnitt);       /*  Debug   */
+        abschnitt = strtok_r(NULL, " ", &naechsterAbschnitt);
+        laenge = strlen(abschnitt);
+        if(max_laenge < laenge)
+        {
+            max_laenge = laenge;
+        }
+        counter = laengen_array[laenge];
+        counter++;
+        laengen_array[laenge] = counter;
+        //printf("Stelle: %s\n", abschnitt);                                                          /*  Debug   */
+        //printf("Laenge vor while: %d\tCounter Wert: %d\n", laenge, counter);                        /*  Debug   */
     }
-    //printf("Ende\n");                                                             /*  Debug   */
-}
-
-void hueafigkeit_ermitteln(int *leangen_array, int *counter_array)
-{
-    int wortleange = 1,
-        counter = 0,
-        array_speicher = 0,
-        array_zeahler = 0;
-
-    while(leangen_array[array_speicher] != 0)
-    {
-        printf("%d.Speicherstelle_LeangenArray: %d\n", array_speicher, leangen_array[array_speicher]);
-        if(wortleange == leangen_array[array_speicher])
-        {
-            counter++;
-            printf("Counter: %d\n", counter);
-            array_speicher++;
-            printf("Array_Speicher: %d\n", array_speicher);
-            array_zeahler++;
-            counter_array[array_speicher] = counter;
-            printf("%d.Speicherstelle_CounterArray: %d\n", array_speicher, counter_array[array_speicher]);
-        }
-        else
-        {
-            wortleange++;
-            printf("Wortleange: %d\n", wortleange);
-            array_speicher = 0;
-            counter = 0;
-        }
-    }  
+    *max_wortlaenge = max_laenge;
+    //printf("Maximale Wortlaenge: %d\nEnde\n", max_wortlaenge);                                      /*  Debug   */
 }
 
 int main()
 {
     FILE *file;
     char string[10000] = {0};
-    int leangen_array[10000] = {1},
-        counter_array[10000] = {0},
-        buchstaben = 0;
+    int laengen_array[10000] = {1},
+        einlese_modus = 1,
+        max_wortlaenge = 0;
 
-    einlesen_text(file, string, &buchstaben);
-    //printf("Stelle 290; %c\n", string[290]);                                      /*  Debug      */
-    wortleange_ermitteln_aus_Eingabe(string, leangen_array);
-    hueafigkeit_ermitteln(leangen_array, counter_array);
+    einlesen_text(file, string, &max_wortlaenge, &einlese_modus);
+    wortlaenge_ermitteln_aus_Eingabe(string, laengen_array, &max_wortlaenge);
 
-    //printf("Zahlen Array: %d\n", *leangen_array);                                 /*  Debug      */
-    //printf("Zeichen im Text: %d\n", buchstaben);                                  /*  Debug      */
-    //printf("%s \n", string);                                                      /*  Debug      */
+    for(int i = 0; i <= max_wortlaenge; i++)
+    {
+        if(laengen_array[i] != 0)
+        {
+            
+        }
+    }
+    //printf("%s \n", string);                                                                        /*  Debug      */
 
-    print_table(leangen_array, counter_array);
+    print_table(laengen_array, max_wortlaenge, &einlese_modus);
     return 0;
 }
