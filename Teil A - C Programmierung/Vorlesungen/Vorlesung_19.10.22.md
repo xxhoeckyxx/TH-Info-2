@@ -1,4 +1,6 @@
+
 ## Strings und `char-` Zeiger
+
 ___
 memcpy:
 
@@ -31,9 +33,11 @@ fgets:
 ```C
 char *fgets(char *s, int size, FILE *stream);
 ```
+
 - fgets() liest höchstens size -1 Zeichen von stream ein (für Standarteingabe stdin anzugeben) und speichert sie in dem Puffer, auf
 
 Bsp Programm zu Charmanipulation mit pointer:
+
 ```C
 #include <stdio.h>
 #include <stdlib.h>
@@ -56,7 +60,6 @@ int main()
     return 0;
 }
 ```
-
 
 Umwandlungen von String into:
 long --> strtol()
@@ -84,12 +87,15 @@ Numerische Werte into String --> sprintf()
 Speicher Initialisierung 
 
 - Werteliste in geschweifte Klammern eingebettet werden
+
     ```C
     int investieren[3][4]{
 
     };
     ```
+
 - Werte in Matrixform in Geschweiften Klammern eingebettet
+
     ```C
     int investieren[3][4]{
         {},
@@ -99,10 +105,12 @@ Speicher Initialisierung
     ```
 
 ## Lokale Arrays variabler Länge (C99)
+
 ```C
 void funk(int dim1, int dim2)
 {
     int tabelle[dim1][dim2]; // zwiedimensionales Array variabler Leange
 }
 ```
+
 **Bei uns VERBOTEN an der TH**

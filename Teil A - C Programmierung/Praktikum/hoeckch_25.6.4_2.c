@@ -8,19 +8,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-void input_fkt(char *anzahl_grundfarbe, char *input, char *vorgegebene_farben, int funktions_zaehler)
+void input_fkt(char anzahl_grundfarbe[], char input[], char vorgegebene_farben[], int funktions_zaehler)
 {
   int pruefe,
       farben_pruefe = 1,
       farben_zaehler = 0;
   do                                                                                        /*  Schleife um die Eingabe zu ueberpruefen                         */
   {
-    printf("%s Grundfarbe : ", &anzahl_grundfarbe[funktions_zaehler]);                      /*  Text zum einlesen der Zahl                                      */
-    pruefe = scanf("%s", input);                                                            /*  Einlesen der Zahl                                               */
+    printf("%s Grundfarbe : ", anzahl_grundfarbe[funktions_zaehler]);                      /*  Text zum einlesen der Zahl                                      */
+    pruefe = scanf("%s", input);                                                          /*  Einlesen der Zahl                                               */
     do
     {
       farben_pruefe = strcmp(input, &vorgegebene_farben[farben_zaehler]);
-      printf("Farben pruefen: %d\nInput: %s\nVorgegebene Farben: %s\n", farben_pruefe, input, &vorgegebene_farben[farben_zaehler]);
+      printf("Farben pruefen: %d\nInput: %s\nVorgegebene Farben: %s\n", farben_pruefe, input, vorgegebene_farben[farben_zaehler]);
       printf("Farben zaehler: %d\n", farben_zaehler);
       farben_zaehler++;
     } while(farben_zaehler != 3);
@@ -36,14 +36,14 @@ void input_fkt(char *anzahl_grundfarbe, char *input, char *vorgegebene_farben, i
 
 int main()
 {
-  char *farben_mischen[4][4] = {{   NULL,      "Gruen",    "Rot",    "Violett",   }, 
-                                {   "Gruen",   "Gruen",    "Gelb",   "Blau",      },
-                                {   "Rot",     "Gelb",     "Rot",    "Purpur"     },
-                                {   "Violett", "Blau",     "Purpur", "Violett"    }},
-       *anzahl_grundfarben[2] = {"Erste", "Zweite"},
-       *vorgegebene_farben[3] = {"Rot", "Gruen", "Violett"},
+  char farben_mischen[4][4][8] = {{   "",	     "Gruen",    "Rot",    "Violett",   }, 
+                                  {   "Gruen",   "Gruen",    "Gelb",   "Blau",      },
+                                  {   "Rot",     "Gelb",     "Rot",    "Purpur"     },
+                                  {   "Violett", "Blau",     "Purpur", "Violett"    }},
+       anzahl_grundfarben[2][7] = {"Erste", "Zweite"},
+       vorgegebene_farben[3][8] = {"Rot", "Gruen", "Violett"},
        input[8];
 
-  input_fkt(*anzahl_grundfarben, input, *vorgegebene_farben, 0);
-  input_fkt(*anzahl_grundfarben, input, *vorgegebene_farben, 1);
+  input_fkt(anzahl_grundfarben, input, vorgegebene_farben, 0);
+  input_fkt(anzahl_grundfarben, input, vorgegebene_farben, 1);
 }
