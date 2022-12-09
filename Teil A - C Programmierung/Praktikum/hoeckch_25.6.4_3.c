@@ -38,22 +38,22 @@ int farbe_pruefen(int pruefe, char *input)
 void input_fkt(char *anzahl_grundfarbe, char *input)
 {
     int pruefe,
-        farbe_ok;
-    do /*  Schleife um die Eingabe zu ueberpruefen                         */
+        farbe_ok = 0;
+    do                                                  /*  Schleife um die Eingabe zu ueberpruefen                         */
     {
-        printf("%s Grundfarbe : ", anzahl_grundfarbe); /*  Text zum einlesen der Zahl                                      */
+        printf("%s Grundfarbe : ", anzahl_grundfarbe);  /*  Text zum einlesen der Zahl                                      */
         pruefe = scanf("%s", input);                    /*  Einlesen der Zahl                                               */
         fflush(stdin);
-        *input = tolower(*input);
-        farbe_ok = farbe_pruefen(farbe_ok, input);
+        *input = tolower(*input);                       /*  Imput to lower - auch Große Anfangsbuchstaben moeglich          */
+        farbe_ok = farbe_pruefen(farbe_ok, input);      /*  Pruefe ob es eine Farbe ist und welche                          */
         //printf("Farbe OK? %d\n", farbe_ok);
 
-        // printf("Pruefe %d\n\n", pruefe);                                                     /*  Debug                                                           */
-        if (pruefe != 1 || farbe_ok != 0) /*  Wird solange wiederholt bis der Benutzer das richtige eingibt   */
+        // printf("Pruefe %d\n\n", pruefe);             /*  Debug                                                           */
+        if (pruefe != 1 || farbe_ok != 0)               /*  Wird solange wiederholt bis der Benutzer das richtige eingibt   */
         {
             printf("Erneut Versuchen!\n\n");
         }
-    } while (pruefe != 1 || farbe_ok != 0); /*  Pruefbedingung                                                  */
+    } while (pruefe != 1 || farbe_ok != 0);             /*  Pruefbedingung                                                  */
     printf("Die %s Farbe ist %s\n", anzahl_grundfarbe, input);
 }
 
