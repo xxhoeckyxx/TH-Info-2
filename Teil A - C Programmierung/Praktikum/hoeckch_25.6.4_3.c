@@ -41,8 +41,8 @@ void input_fkt(char *anzahl_grundfarbe, char *input)
         farbe_ok = 0;
     do                                                  /*  Schleife um die Eingabe zu ueberpruefen                         */
     {
-        printf("%s Grundfarbe : ", anzahl_grundfarbe);  /*  Text zum einlesen der Zahl                                      */
-        pruefe = scanf("%s", input);                    /*  Einlesen der Zahl                                               */
+        printf("%s Grundfarbe : ", anzahl_grundfarbe);  /*  Text zum einlesen der Farbe                                     */
+        pruefe = scanf("%s", input);                    /*  Einlesen der Farbe                                              */
         fflush(stdin);
         *input = tolower(*input);                       /*  Imput to lower - auch Große Anfangsbuchstaben moeglich          */
         farbe_ok = farbe_pruefen(farbe_ok, input);      /*  Pruefe ob es eine Farbe ist und welche                          */

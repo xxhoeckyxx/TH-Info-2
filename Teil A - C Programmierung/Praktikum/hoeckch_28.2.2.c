@@ -4,6 +4,8 @@
       Author: hoeckch80619@th-nuernberg.de
         Date: 09-Dezember-2022
 -------------------------------------------------------------------------*/
+#include <stdio.h>
+
 int main()
 {
     int input;
