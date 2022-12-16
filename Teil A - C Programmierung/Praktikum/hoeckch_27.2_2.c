@@ -8,22 +8,35 @@
 #include <stdlib.h>
 #include <string.h>
 
-void int_input_fkt(char *input)
+/*
+void check_fkt(char *input, int *counter, int check)
 {
-    int check = 0;
+    if(check <= 9)
+    {
+        check++;
+        if(input[*counter] != check)
+        {
+            printf("Dieses Zeichen wird entfernt - bitte Erneut versuchen\n");
+            *counter--;
+        } else {
+            check_fkt(input, counter, check);
+        }
+    }
+}
+*/
+
+void array_input_fkt(char *input)
+{
     printf("Gib eine Zahlenfolge ein: \n");    /*  Text zum einlesen der Zahl                                      */
     for(int i = 0; input[i] != EOF; i++)
     {
+        int check = 0;
         if(i >= 5)
         {
             input = (char *)malloc((i)*sizeof(char));
         }
-        check = fgetc(input[i]);
-        if(check != 1)
-        {
-            printf("Erneut Versuchen");
-        }
-        
+        input[i] = fgetc(stdin);
+        //check_fkt(input[i], &i, &check);
         fflush(stdin);
     }
     printf("Die Zahlenfolge ist &d\n", *input);
@@ -49,7 +62,7 @@ void tally_array(int *size, int *frequency, char *array)
 
 void programm_call(char *input, int *frequency, char *array, int *choice_input_fkt)
 {
-    
+    array_input_fkt(input);
     frequency_evaluation(frequency, input);
     for(int i = 0; i <= 9; i++)
     {
@@ -59,6 +72,7 @@ void programm_call(char *input, int *frequency, char *array, int *choice_input_f
             tally_array(&i, frequency, array);
         }
     }
+    free(*input);
     //printf("--------------------------\n");
 }
 
