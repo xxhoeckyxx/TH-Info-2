@@ -27,19 +27,29 @@ void check_fkt(char *input, int *counter, int check)
 
 void array_input_fkt(char *input)
 {
+    int check = 0;
     printf("Gib eine Zahlenfolge ein: \n");    /*  Text zum einlesen der Zahl                                      */
-    for(int i = 0; input[i] != EOF; i++)
+    while(input[check] != EOF) //for(int i = 0; input[i] != EOF; i++)
     {
-        int check = 0;
-        if(i >= 5)
+        /*if(check >= 5)
         {
-            input = (char *)malloc((i)*sizeof(char));
-        }
-        input[i] = fgetc(stdin);
-        //check_fkt(input[i], &i, &check);
+            char *buffer = NULL;
+            buffer = (char *)malloc((check) * sizeof(char));
+            strcpy(buffer,input);
+            free(input);
+            input = (char *)malloc((check) * sizeof(char));
+            strcpy(input, buffer);
+            free(buffer);
+        }*/
+        fgets(input, 99, stdin);
         fflush(stdin);
+        input[100] = EOF;
+        printf("\n %d, %c", check, input[check]);
+        check++;
+        //check_fkt(input[i], &i, &check);
     }
-    printf("Die Zahlenfolge ist &d\n", *input);
+    printf("\ncheck: %d\ninput[check]: %c\n", check, input[check]);
+    printf("Die Zahlenfolge ist: %s\n", input);
 }
 
 void frequency_evaluation(int *frequency, char *input)
@@ -53,7 +63,7 @@ void tally_array(int *size, int *frequency, char *array)
     array = (char *)malloc((frequency[*size]) * sizeof(char));
     memset(array, '|', frequency[*size]);
 
-    printf("&d: %s\n", *size, array);
+    printf("%d: %s\n", *size, array);
 
     //printf("&d %s, &d\n", frequency[*size], array, *size);
 
@@ -63,7 +73,7 @@ void tally_array(int *size, int *frequency, char *array)
 void programm_call(char *input, int *frequency, char *array, int *choice_input_fkt)
 {
     array_input_fkt(input);
-    frequency_evaluation(frequency, input);
+    //frequency_evaluation(frequency, input);
     for(int i = 0; i <= 9; i++)
     {
         //printf("frequency[&d] = &d\n", i, frequency[i]);
@@ -72,7 +82,7 @@ void programm_call(char *input, int *frequency, char *array, int *choice_input_f
             tally_array(&i, frequency, array);
         }
     }
-    free(*input);
+    free(input);
     //printf("--------------------------\n");
 }
 
@@ -80,7 +90,7 @@ int main()
 {
     int  frequency[10] = {0},
          choice_input_fkt = 0;
-    char input[100] = {0},
+    char input[100] = {"0"},
          *array = NULL;
 
     programm_call(input, frequency, array, &choice_input_fkt);
